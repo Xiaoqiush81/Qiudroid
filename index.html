@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-            background-color: #e8e9e8; /* 整体背景更新为指定颜色 */
+            background-color: #e8e9e8;
             color: #333;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -17,12 +17,12 @@
 
         .kindroid-container {
             width: 100%;
-            max-width: 450px; /* 模拟移动端宽度 */
-            margin: 0 auto; /* 居中显示 */
-            background-color: #e8e9e8; /* 主内容区域背景色更新 */
-            min-height: 100vh; /* 最小高度占满视口 */
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: #e8e9e8;
+            min-height: 100vh;
             padding-bottom: 20px;
-            box-sizing: border-box; /* 边框盒模型 */
+            box-sizing: border-box;
         }
 
         /* 图标通用样式 */
@@ -32,7 +32,6 @@
             justify-content: center;
         }
         
-        /* 列表中的新图片图标样式 */
         .settings-list .icon-img, .subscribe-link .icon-img {
             width: 24px;
             height: 24px;
@@ -43,7 +42,6 @@
          .subscribe-link .icon-img {
              filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5));
          }
-
 
         /* 头部样式 */
         .kindroid-header {
@@ -81,7 +79,6 @@
         .profile-avatars .avatar:first-child {
             margin-left: 0;
         }
-        /* Updated edit icon style */
         .edit-icon {
             position: absolute;
             bottom: 0;
@@ -95,7 +92,7 @@
             justify-content: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             cursor: pointer;
-            overflow: hidden; /* Ensure image stays within circle */
+            overflow: hidden;
         }
         .edit-icon img {
             width: 100%;
@@ -107,29 +104,27 @@
             display: flex;
             align-items: center;
         }
-        .discord-icon {
-            width: 24px;
-            height: 24px;
-            background-color: #7289DA;
-            border-radius: 50%;
-            margin-right: 8px;
+        
+        /* Updated header icons */
+        .header-right .header-icon-link {
             display: inline-block;
-            flex-shrink: 0;
+            margin-left: 8px;
         }
-        .kindroid-logo {
+        .header-right .header-icon {
+             width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        
+        .kindroid-logo a {
             color: #7f00ff;
             font-weight: bold;
             font-size: 18px;
+            text-decoration: none;
+            margin-left: 8px;
         }
-        .header-right .happy-icon {
-            width: 24px;
-            height: 24px;
-            font-size: 20px;
-            color: #ff9800;
-            margin-right: 8px;
-        }
-
-
+        
         /* --- Settings Page Styles --- */
         .settings-view {
             padding: 0 15px;
@@ -142,9 +137,10 @@
             color: #333;
             justify-content: space-between;
         }
+        /* Font adjustment to match image */
         .settings-title-section h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 36px; 
             font-weight: 700;
         }
         .dropdown-arrow {
@@ -181,12 +177,11 @@
             outline: none;
         }
 
-        /* --- New Subscribe Style --- */
         .subscribe-link {
             display: flex;
             align-items: center;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 500; /* Font weight adjustment */
             text-decoration: none;
             background: linear-gradient(to right, #673ab7, #9c27b0);
             -webkit-background-clip: text;
@@ -197,19 +192,20 @@
             padding: 15px 0;
         }
         
-        /* --- Updated Settings List --- */
         .settings-list {
             list-style: none;
             padding: 0;
             margin: 0;
             background-color: transparent;
         }
+        /* Font adjustment to match image */
         .settings-list li {
             display: flex;
             align-items: center;
             padding: 15px 0;
             border-bottom: none;
             font-size: 18px;
+            font-weight: 500;
             color: #333;
             cursor: pointer;
             transition: color 0.2s;
@@ -221,12 +217,6 @@
         /* --- My Kindroids Page Styles --- */
         .my-kindroids-view {
             padding: 20px 15px;
-        }
-        .my-kindroids-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
         }
         .my-kindroids-header h1 {
             margin: 0;
@@ -259,9 +249,7 @@
         .kindroid-card::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 60%;
             background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
             pointer-events: none;
@@ -286,8 +274,7 @@
         .select-overlay {
             display: none;
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(30, 215, 96, 0.8);
             color: white;
@@ -301,10 +288,8 @@
         }
         .card-menu-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
+            top: 10px; right: 10px;
+            width: 24px; height: 24px;
             background-color: rgba(0,0,0,0.5);
             color: white;
             border-radius: 50%;
@@ -319,8 +304,7 @@
         .card-dropdown-menu {
             display: none;
             position: absolute;
-            top: 40px;
-            right: 10px;
+            top: 40px; right: 10px;
             background-color: #333;
             color: white;
             border-radius: 8px;
@@ -362,10 +346,7 @@
             color: #333;
         }
         
-        /* Utility class to hide views */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -375,9 +356,15 @@
                 <span class="icon arrow-left" id="back-to-settings">←</span>
             </div>
             <div class="header-right">
-                <span class="icon happy-icon">😊</span>
-                <span class="icon discord-icon"></span>
-                <span class="kindroid-logo">Kindroid</span>
+                <a href="https://www.reddit.com/r/KindroidAI/" target="_blank" class="header-icon-link">
+                    <img src="https://files.catbox.moe/vj356l.jpeg" alt="Reddit" class="header-icon">
+                </a>
+                <a href="https://discord.com/invite/kindroid" target="_blank" class="header-icon-link">
+                    <img src="https://files.catbox.moe/0xas73.jpeg" alt="Discord" class="header-icon">
+                </a>
+                <span class="kindroid-logo">
+                    <a href="https://kindroid.ai/login/" target="_blank">Kindroid</a>
+                </span>
             </div>
         </header>
 
