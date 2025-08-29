@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kindroid UI - 修正版</title>
+    <style>
+        /* 全局重置与基础样式 */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-color: #e8e9e8; /* 整体背景更新为指定颜色 */
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .kindroid-container {
+            width: 100%;
+            max-width: 450px; /* 模拟移动端宽度 */
+            margin: 0 auto; /* 居中显示 */
+            background-color: #e8e9e8; /* 主内容区域背景色更新 */
+            min-height: 100vh; /* 最小高度占满视口 */
+            padding-bottom: 20px;
+            box-sizing: border-box; /* 边框盒模型 */
+        }
+
+        /* 图标通用样式 */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 头部样式 */
+        .kindroid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            /* 移除渐变背景以匹配新UI */
+            background-color: transparent;
+            color: #333; /* 文字颜色改为深色 */
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .arrow-left {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .profile-avatars {
+            display: flex;
+            position: relative;
+        }
+        .profile-avatars .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #e8e9e8; /* 边框颜色与背景一致 */
+            margin-left: -10px; /* 叠层效果 */
+            object-fit: cover;
+            background-color: #ccc;
+        }
+        .profile-avatars .avatar:first-child {
+            margin-left: 0;
+        }
+        .edit-icon {
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        .discord-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #7289DA;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .kindroid-logo {
+            color: #7f00ff; /* Kindroid Logo 颜色 */
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .header-right .happy-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+            color: #ff9800; /* 橙色笑脸 */
+            margin-right: 8px;
+        }
+
+
+        /* --- Settings Page Styles --- */
+        .settings-view {
+            padding: 0 15px; /* 调整内边距 */
+        }
+        
+        .settings-title-section {
+            display: flex;
+            align-items: center;
+            padding: 20px 0 10px; /* 调整内边距 */
+            color: #333;
+            justify-content: space-between;
+        }
+        .settings-title-section h1 {
+            margin: 0;
+            font-size: 32px; /* 字体调大以匹配图片 */
+            font-weight: 700; /* 加粗 */
+        }
+        .dropdown-arrow {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+        }
+        .dropdown-arrow::before {
+            content: '▼';
+        }
+
+        .user-id-section {
+            padding: 10px 0; /* 调整内边距 */
+        }
+        .user-id-input {
+            display: flex;
+            align-items: center;
+            background-color: #dcdcdc; /* 更新背景色以匹配图片 */
+            border-radius: 25px;
+            padding: 8px 15px;
+            margin-bottom: 25px; /* 增加与订阅按钮的间距 */
+        }
+        .user-id-input .user-icon {
+            font-size: 20px;
+            color: #666;
+            margin-right: 10px;
+        }
+        .user-id-input input {
+            border: none;
+            background: transparent;
+            flex-grow: 1;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+        }
+
+        /* --- New Subscribe Style --- */
+        .subscribe-link {
+            display: flex;
+            align-items: center;
+            font-size: 18px; /* 字体大小 */
+            font-weight: bold;
+            text-decoration: none;
+            background: linear-gradient(to right, #673ab7, #9c27b0); /* 渐变色 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5)); /* 发光效果 */
+            margin-bottom: 20px;
+            padding: 15px 0; /* 增加点击区域 */
+        }
+        .subscribe-link .diamond-icon {
+            font-size: 20px;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5)); /* 图标也发光 */
+        }
+        
+
+        /* --- Updated Settings List --- */
+        .settings-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: transparent; /* 移除背景色 */
+        }
+        .settings-list li {
+            display: flex;
+            align-items: center;
+            padding: 15px 0; /* 调整内边距 */
+            border-bottom: none; /* 移除底边框 */
+            font-size: 18px; /* 字体大小 */
+            color: #333;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .settings-list li:hover {
+            color: #673ab7; /* 悬停时变色 */
+        }
+        .settings-list li .icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #666;
+            width: 30px; /* 固定图标宽度，让文字对齐 */
+        }
+        
+        /* --- My Kindroids Page Styles --- */
+        .my-kindroids-view {
+            padding: 20px 15px;
+        }
+        .my-kindroids-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .my-kindroids-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .my-kindroids-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .my-kindroids-info a {
+            color: #673ab7;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .kindroid-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .kindroid-card {
+            position: relative;
+            cursor: pointer;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .kindroid-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            pointer-events: none;
+        }
+        .kindroid-card.selected {
+            box-shadow: 0 0 20px 5px #00ffc3;
+        }
+        .kindroid-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .kindroid-card-name {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .select-overlay {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(30, 215, 96, 0.8);
+            color: white;
+            font-weight: bold;
+            padding: 10px 40px;
+            border-radius: 25px;
+            pointer-events: none;
+        }
+        .kindroid-card.selected .select-overlay {
+            display: block;
+        }
+        .card-menu-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            line-height: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .card-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            width: 200px;
+        }
+        .card-dropdown-menu.show {
+            display: block;
+        }
+        .card-dropdown-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .card-dropdown-menu a:hover {
+            background-color: #555;
+        }
+
+        /* Footer Styles */
+        .kindroid-footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 15px;
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+        .kindroid-footer a {
+            text-decoration: none;
+            color: #888;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .kindroid-footer a:hover {
+            color: #333;
+        }
+        
+        /* Utility class to hide views */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="kindroid-container">
+        <header class="kindroid-header">
+            <div class="header-left">
+                <span class="icon arrow-left" id="back-to-settings">←</span>
+            </div>
+            <div class="header-right">
+                <span class="icon happy-icon">😊</span>
+                <span class="icon discord-icon"></span>
+                <span class="kindroid-logo">Kindroid</span>
+            </div>
+        </header>
+
+        <main class="settings-view">
+             <div class="profile-avatars" style="padding: 15px 0;">
+                    <img src="https://files.catbox.moe/ooz3g9.png" alt="用户头像1" class="avatar">
+                    <img src="https://files.catbox.moe/y4mo96.jpeg" alt="用户头像2" class="avatar">
+                    <img src="https://via.placeholder.com/40/aaaaaa/ffffff?text=U3" alt="用户头像3" class="avatar">
+                    <img src="https://via.placeholder.com/40/999999/ffffff?text=U4" alt="用户头像4" class="avatar">
+                    <img src="https://via.placeholder.com/40/888888/ffffff?text=U5" alt="用户头像5" class="avatar">
+                    <span class="icon edit-icon">✏️</span>
+                </div>
+            <section class="settings-title-section">
+                <h1>Settings</h1>
+                <span class="dropdown-arrow"></span>
+            </section>
+
+            <section class="user-id-section">
+                <div class="user-id-input">
+                    <span class="icon user-icon">👤</span>
+                    <input type="text" value="User ID: h0vPWSMFkqZws3eonJcW0DAxPcOq2" readonly>
+                </div>
+                <a href="https://kindroid.ai/login/" target="_blank" class="subscribe-link">
+                    <span class="icon diamond-icon">💎</span>
+                    <span>Subscribe</span>
+                </a>
+            </section>
+
+            <ul class="settings-list">
+                <li id="show-my-kindroids"><span class="icon">🤖</span> My Kindroids</li>
+                <li><span class="icon">⚙️</span> General</li>
+                <li><span class="icon">📚</span> Backstory</li>
+                <li><span class="icon">🔊</span> Voice</li>
+                <li><span class="icon">🖼️</span> Avatar</li>
+                <li><span class="icon">🔍</span> Explore</li>
+                <li><span class="icon">🔗</span> Sharing & Referrals</li>
+                <li><span class="icon">❓</span> User guide</li>
+            </ul>
+        </main>
+
+        <main class="my-kindroids-view hidden">
+             <div class="my-kindroids-header">
+                <h1>My Kindroids & Groups</h1>
+             </div>
+             <p class="my-kindroids-info">
+                Free users only have 2 Kindroid slots. Subscribers get 10 Kindroid slots by default and can purchase additional slots. <a href="#">Subscribe here</a>
+             </p>
+             <div class="kindroid-grid">
+                <div class="kindroid-card">
+                    <img src="https://files.catbox.moe/ooz3g9.png" alt="Ghost">
+                    <div class="kindroid-card-name">Ghost</div>
+                    <div class="card-menu-btn" data-menu="menu-1">…</div>
+                    <div class="select-overlay">Select</div>
+                    <div class="card-dropdown-menu" id="menu-1">
+                        <a href="#">View template</a>
+                        <a href="#">Schedule for deletion</a>
+                    </div>
+                </div>
+                <div class="kindroid-card selected">
+                    <img src="https://files.catbox.moe/y4mo96.jpeg" alt="Pyramid Head">
+                    <div class="kindroid-card-name">Pyramid Head</div>
+                    <div class="card-menu-btn" data-menu="menu-2">…</div>
+                    <div class="select-overlay">Select</div>
+                    <div class="card-dropdown-menu" id="menu-2">
+                        <a href="#">View template</a>
+                        <a href="#">Schedule for deletion</a>
+                    </div>
+                </div>
+                <div class="kindroid-card">
+                    <img src="https://via.placeholder.com/250/aaaaaa/ffffff?text=Char3" alt="Pyramid Head">
+                    <div class="kindroid-card-name">Pyramid Head</div>
+                    <div class="card-menu-btn" data-menu="menu-3">…</div>
+                    <div class="select-overlay">Select</div>
+                     <div class="card-dropdown-menu" id="menu-3">
+                        <a href="#">View template</a>
+                        <a href="#">Schedule for deletion</a>
+                    </div>
+                </div>
+                <div class="kindroid-card">
+                    <img src="https://via.placeholder.com/250/999999/ffffff?text=Char4" alt="Pyramid Head-online">
+                    <div class="kindroid-card-name">Pyramid Head-online</div>
+                    <div class="card-menu-btn" data-menu="menu-4">…</div>
+                    <div class="select-overlay">Select</div>
+                     <div class="card-dropdown-menu" id="menu-4">
+                        <a href="#">View template</a>
+                        <a href="#">Schedule for deletion</a>
+                    </div>
+                </div>
+                 <div class="kindroid-card">
+                    <img src="https://via.placeholder.com/250/888888/ffffff?text=Group1" alt="Group">
+                    <div class="kindroid-card-name">Group</div>
+                    <div class="card-menu-btn" data-menu="menu-5">…</div>
+                    <div class="select-overlay">Select</div>
+                    <div class="card-dropdown-menu" id="menu-5">
+                        <a href="#">View template</a>
+                        <a href="#">Schedule for deletion</a>
+                    </div>
+                </div>
+             </div>
+        </main>
+
+        <footer class="kindroid-footer">
+            <a href="#">Announcements</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
+            <a href="#">Log out</a>
+        </footer>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const settingsView = document.querySelector('.settings-view');
+        const myKindroidsView = document.querySelector('.my-kindroids-view');
+        const showMyKindroidsBtn = document.getElementById('show-my-kindroids');
+        const backToSettingsBtn = document.getElementById('back-to-settings');
+
+        showMyKindroidsBtn.addEventListener('click', () => {
+            settingsView.classList.add('hidden');
+            myKindroidsView.classList.remove('hidden');
+        });
+
+        backToSettingsBtn.addEventListener('click', () => {
+            myKindroidsView.classList.add('hidden');
+            settingsView.classList.remove('hidden');
+        });
+
+        const kindroidCards = document.querySelectorAll('.kindroid-card');
+        kindroidCards.forEach(card => {
+            card.addEventListener('click', (event) => {
+                if (event.target.classList.contains('card-menu-btn')) {
+                    return;
+                }
+                kindroidCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+        });
+
+        const menuButtons = document.querySelectorAll('.card-menu-btn');
+        menuButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const menuId = button.getAttribute('data-menu');
+                const targetMenu = document.getElementById(menuId);
+                
+                document.querySelectorAll('.card-dropdown-menu.show').forEach(openMenu => {
+                    if (openMenu !== targetMenu) {
+                        openMenu.classList.remove('show');
+                    }
+                });
+                
+                targetMenu.classList.toggle('show');
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!event.target.matches('.card-menu-btn')) {
+                 document.querySelectorAll('.card-dropdown-menu.show').forEach(openMenu => {
+                    openMenu.classList.remove('show');
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
