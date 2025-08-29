@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kindroid UI - 修正版</title>
+    <title>Qiudroid.ai</title>
     <style>
         /* 全局重置与基础样式 */
         body {
@@ -31,6 +31,19 @@
             align-items: center;
             justify-content: center;
         }
+        
+        /* 列表中的新图片图标样式 */
+        .settings-list .icon-img, .subscribe-link .icon-img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            object-fit: cover;
+            border-radius: 4px; 
+        }
+         .subscribe-link .icon-img {
+             filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5));
+         }
+
 
         /* 头部样式 */
         .kindroid-header {
@@ -38,9 +51,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px;
-            /* 移除渐变背景以匹配新UI */
             background-color: transparent;
-            color: #333; /* 文字颜色改为深色 */
+            color: #333;
             position: relative;
         }
 
@@ -61,14 +73,15 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 2px solid #e8e9e8; /* 边框颜色与背景一致 */
-            margin-left: -10px; /* 叠层效果 */
+            border: 2px solid #e8e9e8;
+            margin-left: -10px;
             object-fit: cover;
             background-color: #ccc;
         }
         .profile-avatars .avatar:first-child {
             margin-left: 0;
         }
+        /* Updated edit icon style */
         .edit-icon {
             position: absolute;
             bottom: 0;
@@ -77,13 +90,17 @@
             border-radius: 50%;
             width: 20px;
             height: 20px;
-            font-size: 12px;
-            color: #666;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             cursor: pointer;
+            overflow: hidden; /* Ensure image stays within circle */
+        }
+        .edit-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .header-right {
@@ -100,7 +117,7 @@
             flex-shrink: 0;
         }
         .kindroid-logo {
-            color: #7f00ff; /* Kindroid Logo 颜色 */
+            color: #7f00ff;
             font-weight: bold;
             font-size: 18px;
         }
@@ -108,27 +125,27 @@
             width: 24px;
             height: 24px;
             font-size: 20px;
-            color: #ff9800; /* 橙色笑脸 */
+            color: #ff9800;
             margin-right: 8px;
         }
 
 
         /* --- Settings Page Styles --- */
         .settings-view {
-            padding: 0 15px; /* 调整内边距 */
+            padding: 0 15px;
         }
         
         .settings-title-section {
             display: flex;
             align-items: center;
-            padding: 20px 0 10px; /* 调整内边距 */
+            padding: 20px 0 10px;
             color: #333;
             justify-content: space-between;
         }
         .settings-title-section h1 {
             margin: 0;
-            font-size: 32px; /* 字体调大以匹配图片 */
-            font-weight: 700; /* 加粗 */
+            font-size: 32px;
+            font-weight: 700;
         }
         .dropdown-arrow {
             font-size: 24px;
@@ -140,15 +157,15 @@
         }
 
         .user-id-section {
-            padding: 10px 0; /* 调整内边距 */
+            padding: 10px 0;
         }
         .user-id-input {
             display: flex;
             align-items: center;
-            background-color: #dcdcdc; /* 更新背景色以匹配图片 */
+            background-color: #dcdcdc;
             border-radius: 25px;
             padding: 8px 15px;
-            margin-bottom: 25px; /* 增加与订阅按钮的间距 */
+            margin-bottom: 25px;
         }
         .user-id-input .user-icon {
             font-size: 20px;
@@ -168,49 +185,37 @@
         .subscribe-link {
             display: flex;
             align-items: center;
-            font-size: 18px; /* 字体大小 */
+            font-size: 18px;
             font-weight: bold;
             text-decoration: none;
-            background: linear-gradient(to right, #673ab7, #9c27b0); /* 渐变色 */
+            background: linear-gradient(to right, #673ab7, #9c27b0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5)); /* 发光效果 */
+            filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5));
             margin-bottom: 20px;
-            padding: 15px 0; /* 增加点击区域 */
-        }
-        .subscribe-link .diamond-icon {
-            font-size: 20px;
-            margin-right: 15px;
-            filter: drop-shadow(0 0 5px rgba(127, 0, 255, 0.5)); /* 图标也发光 */
+            padding: 15px 0;
         }
         
-
         /* --- Updated Settings List --- */
         .settings-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            background-color: transparent; /* 移除背景色 */
+            background-color: transparent;
         }
         .settings-list li {
             display: flex;
             align-items: center;
-            padding: 15px 0; /* 调整内边距 */
-            border-bottom: none; /* 移除底边框 */
-            font-size: 18px; /* 字体大小 */
+            padding: 15px 0;
+            border-bottom: none;
+            font-size: 18px;
             color: #333;
             cursor: pointer;
             transition: color 0.2s;
         }
         .settings-list li:hover {
-            color: #673ab7; /* 悬停时变色 */
-        }
-        .settings-list li .icon {
-            font-size: 24px;
-            margin-right: 15px;
-            color: #666;
-            width: 30px; /* 固定图标宽度，让文字对齐 */
+            color: #673ab7;
         }
         
         /* --- My Kindroids Page Styles --- */
@@ -383,7 +388,9 @@
                     <img src="https://via.placeholder.com/40/aaaaaa/ffffff?text=U3" alt="用户头像3" class="avatar">
                     <img src="https://via.placeholder.com/40/999999/ffffff?text=U4" alt="用户头像4" class="avatar">
                     <img src="https://via.placeholder.com/40/888888/ffffff?text=U5" alt="用户头像5" class="avatar">
-                    <span class="icon edit-icon">✏️</span>
+                    <span class="icon edit-icon">
+                        <img src="https://files.catbox.moe/8r7ziq.jpeg" alt="Edit">
+                    </span>
                 </div>
             <section class="settings-title-section">
                 <h1>Settings</h1>
@@ -393,23 +400,23 @@
             <section class="user-id-section">
                 <div class="user-id-input">
                     <span class="icon user-icon">👤</span>
-                    <input type="text" value="User ID: h0vPWSMFkqZws3eonJcW0DAxPcOq2" readonly>
+                    <input type="text" value="User ID: zX8vYpWqA9bC7eF3gH2jK5mN" readonly>
                 </div>
                 <a href="https://kindroid.ai/login/" target="_blank" class="subscribe-link">
-                    <span class="icon diamond-icon">💎</span>
+                    <img src="https://files.catbox.moe/ivlulo.jpeg" alt="Subscribe" class="icon-img">
                     <span>Subscribe</span>
                 </a>
             </section>
 
             <ul class="settings-list">
-                <li id="show-my-kindroids"><span class="icon">🤖</span> My Kindroids</li>
-                <li><span class="icon">⚙️</span> General</li>
-                <li><span class="icon">📚</span> Backstory</li>
-                <li><span class="icon">🔊</span> Voice</li>
-                <li><span class="icon">🖼️</span> Avatar</li>
-                <li><span class="icon">🔍</span> Explore</li>
-                <li><span class="icon">🔗</span> Sharing & Referrals</li>
-                <li><span class="icon">❓</span> User guide</li>
+                <li id="show-my-kindroids"><img src="https://files.catbox.moe/h7tw5j.jpeg" alt="My Kindroids" class="icon-img"> My Kindroids</li>
+                <li><img src="https://files.catbox.moe/ljo3qs.jpeg" alt="General" class="icon-img"> General</li>
+                <li><img src="https://files.catbox.moe/6knt46.jpeg" alt="Backstory" class="icon-img"> Backstory</li>
+                <li><img src="https://files.catbox.moe/8oktbi.jpeg" alt="Voice" class="icon-img"> Voice</li>
+                <li><img src="https://files.catbox.moe/8s4fex.jpeg" alt="Avatar" class="icon-img"> Avatar</li>
+                <li><img src="https://files.catbox.moe/x26pfa.jpeg" alt="Explore" class="icon-img"> Explore</li>
+                <li><img src="https://files.catbox.moe/kzg1ib.jpeg" alt="Sharing & Referrals" class="icon-img"> Sharing & Referrals</li>
+                <li><img src="https://files.catbox.moe/09stl1.jpeg" alt="User guide" class="icon-img"> User guide</li>
             </ul>
         </main>
 
